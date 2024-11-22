@@ -224,6 +224,24 @@ pre {
   100% { transform: rotate(360deg); }
 }
 
+/* Footer Styling */
+footer {
+  text-align: center;
+  margin-top: 30px;
+  padding: 15px;
+  font-size: 14px;
+  color: #7f8c8d;
+}
+
+footer a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
 /* Responsive Design */
 @media (max-width: 600px) {
   .container {
@@ -254,7 +272,6 @@ pre {
 <div id="app" class="container">
   <h1>Remove Duplicate Lines</h1>
   <textarea v-model="inputText" :placeholder="isRealTimeEnabled ? 'Start typing... (Real-time enabled)' : 'Paste your list here...'" @input="handleInput"></textarea>
-  
   <!-- Delimiter Input -->
   <div class="label-group">
     Delimiter: <input type="text" v-model="delimiter" placeholder="e.g., , or ;" />
@@ -298,6 +315,11 @@ pre {
     <pre>{{ outputText }}</pre>
   </div>
 </div>
+
+<!-- Footer -->
+<footer>
+  <p>Concept by <strong>Shubham Vishwakarma</strong>, Build by <strong>ChatGPT</strong> hosted by <a href="https://github.com" target="_blank">GitHub</a>. &copy; 2024 All rights reserved.</p>
+</footer>
 
 <script>
 const app = Vue.createApp({
