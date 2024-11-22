@@ -49,6 +49,7 @@ textarea {
   background-color: #f9f9f9;
   transition: all 0.3s ease;
   height: 160px;
+  resize: vertical;
 }
 
 textarea:focus {
@@ -98,7 +99,7 @@ textarea:focus {
   background-color: #e74c3c;
 }
 
-.toggle-button:hover, .submit-button:hover {
+.toggle-button:hover, .submit-button:hover, .copy-button:hover {
   opacity: 0.9;
 }
 
@@ -138,7 +139,7 @@ pre {
 
 /* Copy Button Styling */
 .copy-button {
-  background-color: #eab239;
+  background-color: #2ecc71;
   color: white;
   display: flex;
   align-items: center;
@@ -162,6 +163,24 @@ pre {
 
 .notification.show {
   display: block;
+}
+
+/* Tooltip */
+.tooltip {
+  position: absolute;
+  background-color: #333;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 14px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.copy-button:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
 }
 
 /* Responsive Design */
@@ -211,6 +230,7 @@ pre {
 <!-- Copy Button -->
 <button v-if="outputText" class="copy-button" @click="copyToClipboard">
   <i class="fas fa-copy"></i> Copy to Clipboard
+  <div class="tooltip">Click to copy the results</div>
 </button>
 
 <!-- Notification -->

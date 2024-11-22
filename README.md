@@ -1,62 +1,163 @@
-### **Project Title**: **LineClean: Duplicate Line Remover & Formatter**
+# **LineClean: Duplicate Line Remover & Formatter**
 
-### **Project Description**:
-
-**LineClean: Duplicate Line Remover & Formatter** is a user-friendly web application designed to help you quickly clean up and format lists of text by removing duplicate lines. Whether you're managing lists of emails, items, or raw data, this app simplifies the process of eliminating redundancies, offering customizable options to suit various use cases. With its intuitive interface, you can paste or type in your data, choose how you'd like it formatted, and instantly get a clean, duplicate-free result.
+**LineClean** is a web application designed to help users remove duplicate lines from a list, format their data, and customize the result with a variety of options. The app supports real-time text processing, customizable settings (like ignoring case, sorting results, and keeping blank lines), and allows users to easily copy the processed result.
 
 ---
 
-### **Key Features**:
+## **Table of Contents**
 
-1. **Input Area**:
-   - **Paste or Type**: Simply paste or type a list of text into a spacious text area.
-   - **Real-Time Processing**: As you type or modify the text, the results are updated in real-time (if enabled). Alternatively, you can choose to process the input manually by clicking the **Submit** button.
-
-2. **Customization Options**:
-   - **Ignore Capitalization**: This option converts all text to lowercase, ensuring that text like "abc" and "ABC" are treated as identical, removing case-sensitive duplicates.
-   - **Keep Blanks at Line Starts**: Retain blank lines or lines with leading spaces in the result, useful for when blank lines have meaning or structure in the data.
-   - **Sort Results**: Sorts the lines alphabetically, ensuring that the resulting list is organized and duplicates are grouped together.
-
-3. **Real-Time or Manual Processing**:
-   - Toggle between **real-time updates**, where the list is processed immediately after typing, or **manual processing**, where you click the **Submit** button to clean the data after editing the input.
-
-4. **Result Display**:
-   - The app displays the **cleaned** list of text, free of duplicates, in a separate section below the input area.
-   - The results are **scrollable**, ensuring users can view long lists without clutter.
+1. [Project Overview](#project-overview)
+2. [Features](#features)
+3. [Technologies Used](#technologies-used)
+4. [Installation](#installation)
+5. [Usage](#usage)
+6. [Features and Functionality](#features-and-functionality)
+7. [Folder Structure](#folder-structure)
+8. [Licensing](#licensing)
 
 ---
 
-### **Technologies Used**:
+## **Project Overview**
 
-- **Frontend**: Developed using **Vue.js** (v3.5.13) to provide a fast, reactive user interface.
-- **Styling**: Modern **CSS** techniques with **Flexbox** and **media queries** for responsive design, ensuring an optimal user experience on both desktop and mobile devices.
-- **User Experience**: The app has a **clean, minimalistic interface** with intuitive buttons, smooth transitions, and clear visual feedback.
+**LineClean** is a simple yet powerful tool that allows users to remove duplicate lines from their input list, apply various text formatting options, and copy the results to the clipboard. The app provides a modern and intuitive user interface (UI) powered by Vue.js, with real-time updates and customizable settings.
 
 ---
 
-### **Key Benefits**:
+## **Features**
 
-- **Fast & Efficient**: Clean up lists and remove duplicates in seconds, saving you time and effort.
-- **Customizable Output**: Choose whether to ignore capitalization, retain blank lines, or sort your results.
-- **Easy-to-Use**: With an intuitive, responsive design, **LineClean** is perfect for users of all skill levels.
-- **Mobile-Friendly**: The app is optimized for both **desktop** and **mobile** devices, making it accessible wherever you are.
-
----
-
-### **Use Cases**:
-
-1. **Data Cleanup**: Easily remove duplicate email addresses, product names, or list items before importing them into a database or spreadsheet.
-2. **Text Organization**: Clean up and organize long lists of text, ensuring no duplicates remain.
-3. **Code or Script Formatting**: Remove duplicate lines from code snippets or scripts to tidy up your codebase or configuration files.
+- **Remove Duplicate Lines**: Automatically removes duplicate lines from the user’s input.
+- **Real-Time Processing**: Users can enable or disable real-time processing as they type.
+- **Ignore Case**: Option to make the processing case-insensitive (results in lowercase).
+- **Keep Blank Lines**: Option to retain blank lines at the start of the list.
+- **Sort Results**: Users can sort the processed results alphabetically.
+- **Copy to Clipboard**: One-click button to copy the processed results to the clipboard, with a confirmation notification.
+- **Responsive Design**: The app is fully responsive and works well on desktop and mobile devices.
 
 ---
 
-### **Why Use LineClean?**
+## **Technologies Used**
 
-Whether you're cleaning up a list of data for an import, organizing notes, or tidying up a script, **LineClean** simplifies the task of removing redundant lines. It combines powerful text processing features with an intuitive design to give you a tool that is as effective as it is easy to use. 
-
-With **LineClean**, you'll never have to worry about manually searching for and removing duplicates again. Simply paste your text, choose your formatting options, and get back to work faster, with a perfectly clean list at your fingertips.
+- **Vue.js**: Frontend JavaScript framework to build the user interface.
+- **HTML5**: Structure of the web page.
+- **CSS3**: Styling and layout of the app with responsive design features.
+- **FontAwesome**: Icon library used for the "Copy to Clipboard" button.
+- **JavaScript**: For handling the logic and interactivity of the app.
 
 ---
 
-This tool is ideal for anyone who works with lists or data and needs an efficient, customizable solution for eliminating duplicate lines. Whether for personal, professional, or coding purposes, **LineClean** is the go-to solution for keeping your data clean and well-organized.
+## **Installation**
+
+To set up **LineClean** locally, follow these steps:
+
+### Prerequisites
+- Make sure you have **Node.js** installed on your system (if you'd like to set up a local development environment or make modifications to the project).
+
+### Steps
+
+1. **Clone the repository** (if applicable):
+   ```bash
+   git clone https://github.com/yourusername/lineclean.git
+   ```
+
+2. **Navigate to the project folder**:
+   ```bash
+   cd lineclean
+   ```
+
+3. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+4. **Start the local development server**:
+   ```bash
+   npm run serve
+   ```
+
+5. **Open the app**:
+   Once the server is running, open your browser and go to `http://localhost:8080/` to see the app in action.
+
+---
+
+## **Usage**
+
+### 1. **Enter Your List**
+   - Paste or type your list into the input field (the large textarea).
+   - Each line should be separated by a newline.
+
+### 2. **Configure Settings**
+   - **Ignore Case**: Check this box if you want to make the comparison case-insensitive.
+   - **Keep Blank Lines**: Check this box if you want to keep blank lines in the output.
+   - **Sort Results**: Check this box to automatically sort the lines alphabetically.
+
+### 3. **Real-Time or Submit Mode**
+   - **Real-Time Mode**: The app will process your input as you type (enabled by default).
+   - **Submit Mode**: If you disable real-time processing, you can click the "Submit" button to process the input.
+
+### 4. **Copy Results**
+   - Once the processed results are shown, click the **Copy to Clipboard** button to copy them.
+   - A notification will appear confirming that the text has been copied to the clipboard.
+
+---
+
+## **Features and Functionality**
+
+### **Real-Time Processing**
+   - The app processes the text as you type (enabled by default). If you uncheck the "Enable Real-Time" option, the app will only process the input when you click the "Submit" button.
+  
+### **Ignore Case**
+   - If this option is enabled, all lines are converted to lowercase before processing. This ensures that case differences (like "apple" and "Apple") are not treated as separate entries.
+
+### **Keep Blank Lines**
+   - This option controls whether blank lines should be kept in the output. If unchecked, blank lines will be removed.
+
+### **Sort Results**
+   - If enabled, the processed lines will be sorted in alphabetical order.
+
+### **Copy to Clipboard**
+   - After processing the list, users can click the **Copy to Clipboard** button to copy the cleaned text. A confirmation notification is displayed to indicate successful copying.
+
+---
+
+## **Folder Structure**
+
+The project is structured as follows:
+
+```
+lineclean/
+│
+├── index.html            # Main HTML file (root template)
+├── assets/               # Static assets (images, fonts, etc.)
+│   ├── styles/           # CSS files
+│   └── icons/            # Icon images
+├── src/                  # Source code
+│   ├── components/       # Vue components
+│   ├── App.vue           # Main Vue component
+│   └── main.js           # JavaScript entry point for Vue
+├── package.json          # Node package manager file (dependencies, scripts)
+└── README.md             # Project documentation (this file)
+```
+
+---
+
+## **Licensing**
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## **Contributing**
+
+We welcome contributions to this project! If you'd like to contribute, please fork the repository, create a feature branch, and submit a pull request.
+
+---
+
+## **Contact**
+
+For more information or questions, feel free to contact the project maintainers at:
+- **Email**: itsbhm.me@gmail.com
+- **GitHub**: https://github.com/itsbhm/line-clean
+
+---
+
+That's it! This documentation should provide an overview and guide for anyone who wants to set up, use, or contribute to the **LineClean** project. Feel free to adjust any sections to suit your specific needs!
