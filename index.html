@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LineClean: Duplicate Line Remover & Formatter</title>
 <script src="https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.global.prod.js"></script>
-<!-- FontAwesome for the Copy Icon -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <style>
 /* Global Styles */
@@ -16,26 +15,38 @@
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Inter', sans-serif;
   background-color: #f7f7f7;
   color: #333;
   padding: 40px 10px;
+  transition: background-color 0.3s ease;
+}
+
+body.dark-mode {
+  background-color: #2c3e50;
+  color: #ecf0f1;
 }
 
 .container {
-  max-width: 750px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 30px;
   background-color: white;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.container.dark-mode {
+  background-color: #34495e;
 }
 
 h1 {
-  font-size: 28px;
+  font-size: 32px;
   color: #34495e;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
+  letter-spacing: 0.5px;
 }
 
 /* Textarea Styling */
@@ -43,20 +54,18 @@ textarea {
   width: 100%;
   padding: 16px;
   font-size: 16px;
-  border-radius: 12px;
+  border-radius: 10px;
   border: 1px solid #ccc;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   background-color: #f9f9f9;
   transition: all 0.3s ease;
   height: 160px;
   resize: vertical;
-  box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.05);
 }
 
 textarea:focus {
   border-color: #3498db;
   outline: none;
-  box-shadow: inset 0 1px 5px rgba(52, 152, 219, 0.3);
 }
 
 /* Options Section */
@@ -71,7 +80,7 @@ textarea:focus {
 .checkbox-group {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 12px;
 }
 
 .checkbox-group label {
@@ -79,9 +88,23 @@ textarea:focus {
   color: #7f8c8d;
 }
 
-/* Buttons Styling */
-.toggle-button, .submit-button, .copy-button, .clear-button {
-  width: 100%;
+.label-group {
+  font-size: 16px;
+  color: #7f8c8d;
+  margin-bottom: 8px;
+}
+
+/* Button Grouping */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.button-group button {
+  flex: 1 1 calc(50% - 10px);
   padding: 16px;
   font-size: 18px;
   font-weight: 600;
@@ -89,10 +112,7 @@ textarea:focus {
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-bottom: 15px;
 }
 
 .toggle-button {
@@ -104,7 +124,7 @@ textarea:focus {
   background-color: #e74c3c;
 }
 
-.toggle-button:hover, .submit-button:hover, .copy-button:hover, .clear-button:hover {
+.toggle-button:hover, .submit-button:hover, .copy-button:hover, .export-button:hover {
   opacity: 0.9;
 }
 
@@ -116,27 +136,6 @@ textarea:focus {
 .submit-button:disabled {
   background-color: #bdc3c7;
   cursor: not-allowed;
-}
-
-.clear-button {
-  background-color: #e74c3c;
-  color: white;
-}
-
-.copy-button {
-  background-color: #2ecc71;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.copy-button i {
-  margin-right: 8px;
-}
-
-.copy-button:hover {
-  background-color: #27ae60;
 }
 
 /* Results Section */
@@ -163,6 +162,19 @@ pre {
   font-size: 16px;
 }
 
+/* Copy Button Styling */
+.copy-button {
+  background-color: #2ecc71;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy-button i {
+  margin-right: 8px;
+}
+
 /* Notification Styling */
 .notification {
   padding: 10px 20px;
@@ -172,12 +184,10 @@ pre {
   margin-top: 20px;
   text-align: center;
   display: none;
-  transition: opacity 0.3s ease;
 }
 
 .notification.show {
   display: block;
-  opacity: 1;
 }
 
 /* Tooltip */
@@ -198,11 +208,20 @@ pre {
   opacity: 1;
 }
 
-/* Clear Button */
-.clear-button {
-  background-color: #e74c3c;
-  color: white;
-  margin-top: 15px;
+/* Spinner for loading */
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* Responsive Design */
@@ -220,8 +239,13 @@ pre {
     font-size: 14px;
   }
 
-  .toggle-button, .submit-button, .copy-button, .clear-button {
-    font-size: 16px;
+  .button-group button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .checkbox-group label {
+    font-size: 14px;
   }
 }
 </style>
@@ -229,8 +253,12 @@ pre {
 <body>
 <div id="app" class="container">
   <h1>Remove Duplicate Lines</h1>
-  <!-- Textarea for user input -->
   <textarea v-model="inputText" :placeholder="isRealTimeEnabled ? 'Start typing... (Real-time enabled)' : 'Paste your list here...'" @input="handleInput"></textarea>
+  
+  <!-- Delimiter Input -->
+  <div class="label-group">
+    Delimiter: <input type="text" v-model="delimiter" placeholder="e.g., , or ;" />
+  </div>
 
   <!-- Options Section -->
   <div class="options">
@@ -238,32 +266,33 @@ pre {
       <label><input type="checkbox" v-model="ignoreCase"> Ignore Capitalization (results lowercase)</label>
       <label><input type="checkbox" v-model="keepBlanks"> Keep blanks at the start of lines</label>
       <label><input type="checkbox" v-model="sortResults"> Sort results</label>
+      <label><input type="radio" v-model="sortOption" value="alpha"> Alphabetical Order</label>
+      <label><input type="radio" v-model="sortOption" value="length"> Sort by Length</label>
     </div>
   </div>
 
-  <!-- Real-Time Toggle Button -->
-  <button class="toggle-button" :class="{ disabled: !isRealTimeEnabled }" @click="toggleRealTimeCalculation">
-    {{ isRealTimeEnabled ? 'Disable Real-Time' : 'Enable Real-Time' }}
-  </button>
-
-  <!-- Submit Button -->
-  <button v-if="!isRealTimeEnabled" class="submit-button" @click="processInput" :disabled="!inputText.trim()">Submit</button>
-
-  <!-- Copy Button -->
-  <button v-if="outputText" class="copy-button" @click="copyToClipboard">
-    <i class="fas fa-copy"></i> Copy to Clipboard
-    <div class="tooltip">Click to copy the results</div>
-  </button>
-
-  <!-- Clear Button -->
-  <button v-if="outputText" class="clear-button" @click="clearResults">Clear Results</button>
-
-  <!-- Notification -->
-  <div v-if="notificationVisible" class="notification show">
-    Text copied to clipboard!
+  <!-- Button Grouping -->
+  <div class="button-group">
+    <button class="toggle-button" @click="toggleRealTimeCalculation">{{ isRealTimeEnabled ? 'Disable Real-Time' : 'Enable Real-Time' }}</button>
+    <button v-if="!isRealTimeEnabled" class="submit-button" @click="processInput" :disabled="!inputText.trim()">Submit</button>
   </div>
 
-  <!-- Results -->
+  <!-- Loading Spinner -->
+  <div v-if="isLoading" class="spinner"></div>
+
+  <!-- Notification -->
+  <div v-if="notificationVisible" class="notification show">Text copied to clipboard!</div>
+
+  <!-- Copy Button -->
+  <div v-if="outputText" class="button-group">
+    <button class="copy-button" @click="copyToClipboard">
+      <i class="fas fa-copy"></i> Copy to Clipboard
+      <div class="tooltip">Click to copy the results</div>
+    </button>
+    <button class="export-button" @click="exportToFile">Export to File</button>
+  </div>
+
+  <!-- Results Section -->
   <div class="results" v-if="outputText">
     <h3>Results:</h3>
     <pre>{{ outputText }}</pre>
@@ -274,13 +303,17 @@ pre {
 const app = Vue.createApp({
   data() {
     return {
-      inputText: '',        // User input in the textarea
-      ignoreCase: false,    // Checkbox for ignoring case
-      keepBlanks: false,    // Checkbox for keeping blanks
-      sortResults: false,   // Checkbox for sorting results
-      outputText: '',       // Processed output
-      isRealTimeEnabled: true, // Flag for real-time calculation
-      notificationVisible: false, // Flag for notification visibility
+      inputText: '',
+      delimiter: '\n',    
+      ignoreCase: false,
+      keepBlanks: false,
+      sortResults: false,
+      sortOption: 'alpha',
+      outputText: '',
+      isRealTimeEnabled: true,
+      notificationVisible: false,
+      isLoading: false,
+      isDarkMode: false,
     };
   },
   methods: {
@@ -290,35 +323,32 @@ const app = Vue.createApp({
         this.processInput();
       }
     },
-
     handleInput() {
       if (this.isRealTimeEnabled) {
         this.processInput();
       }
     },
-
     processInput() {
-      let lines = this.inputText.split('\n');
-
-      if (!this.keepBlanks) {
-        lines = lines.filter(line => line.trim() !== '');
-      }
-
-      if (this.ignoreCase) {
-        lines = lines.map(line => line.toLowerCase());
-      }
-
-      lines = Array.from(new Set(lines));
-
-      if (this.sortResults) {
-        lines = lines.sort();
-      }
-
-      this.outputText = lines.join('\n');
+      this.isLoading = true;
+      setTimeout(() => {
+        let lines = this.inputText.split(this.delimiter || '\n');
+        if (!this.keepBlanks) {
+          lines = lines.filter(line => line.trim() !== '');
+        }
+        if (this.ignoreCase) {
+          lines = lines.map(line => line.toLowerCase());
+        }
+        lines = Array.from(new Set(lines));
+        if (this.sortOption === 'alpha') {
+          lines = lines.sort();
+        } else if (this.sortOption === 'length') {
+          lines = lines.sort((a, b) => a.length - b.length);
+        }
+        this.outputText = lines.join('\n');
+        this.isLoading = false;
+      }, 500);
     },
-
     copyToClipboard() {
-      // Create a temporary textarea to copy the result text
       const tempTextArea = document.createElement('textarea');
       tempTextArea.value = this.outputText;
       document.body.appendChild(tempTextArea);
@@ -326,20 +356,24 @@ const app = Vue.createApp({
       document.execCommand('copy');
       document.body.removeChild(tempTextArea);
 
-      // Show the notification
       this.notificationVisible = true;
-
-      // Hide the notification after 2 seconds
       setTimeout(() => {
         this.notificationVisible = false;
       }, 2000);
     },
-
-    clearResults() {
-      this.inputText = '';
-      this.outputText = '';
+    exportToFile() {
+      const blob = new Blob([this.outputText], { type: 'text/plain;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'cleaned-results.txt';
+      link.click();
+    },
+    toggleMode() {
+      this.isDarkMode = !this.isDarkMode;
+      document.body.classList.toggle('dark-mode', this.isDarkMode);
+      document.querySelector('.container').classList.toggle('dark-mode', this.isDarkMode);
     }
-  }
+  },
 });
 
 app.mount('#app');
