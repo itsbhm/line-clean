@@ -16,17 +16,31 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #f7f7f7;
   color: #333;
   padding: 40px 10px;
   transition: background-color 0.3s ease;
 }
 
-body.dark-mode {
-  background-color: #2c3e50;
-  color: #ecf0f1;
+/* Light Gradient Background */
+body {
+  animation: dynamicBackground 10s infinite alternate;
+  background: linear-gradient(45deg, #f0f8ff, #ffebcd, #98fb98, #dcdcdc);
+  background-size: 400% 400%;
 }
 
+@keyframes dynamicBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Container Styles */
 .container {
   max-width: 800px;
   margin: 0 auto;
@@ -228,9 +242,15 @@ pre {
 footer {
   text-align: center;
   margin-top: 30px;
-  padding: 15px;
+  padding: 20px 30px;
   font-size: 14px;
-  color: #7f8c8d;
+  color: #2c3e50; /* Darker text for footer */
+  background-color: #ecf0f1; /* Light footer background */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 footer a {
@@ -318,7 +338,7 @@ footer a:hover {
 
 <!-- Footer -->
 <footer>
-  <p>Concept by <strong>Shubham Vishwakarma</strong>, Build by <strong>ChatGPT</strong> hosted by <a href="https://github.com" target="_blank">GitHub</a>. &copy; 2024 All rights reserved.</p>
+  <p>Concept by <strong>Shubham Vishwakarma</strong>, Build using <strong>Artificial intelligence (AI)</strong> hosted by <a href="https://github.com" target="_blank">GitHub</a>. &copy; 2024 All rights reserved.</p>
 </footer>
 
 <script>
@@ -326,7 +346,7 @@ const app = Vue.createApp({
   data() {
     return {
       inputText: '',
-      delimiter: '\n',    
+      delimiter: '\n',
       ignoreCase: false,
       keepBlanks: false,
       sortResults: false,
